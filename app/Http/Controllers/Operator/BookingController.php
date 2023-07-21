@@ -6,6 +6,7 @@ use PDF;
 use Carbon\Carbon;
 use App\Models\Toilet;
 use App\Models\Pemandian;
+use App\Models\Kas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,24 @@ class BookingController extends Controller
     {
         $pemandian->status = 'accepted';
         $pemandian->save();
+
+        // Ambil data dari tabel "pemandian" berdasarkan id
+        $pemandianData = $pemandian->toArray();
+
+        // Ambil waktu server saat ini menggunakan Carbon
+        $inout_date = Carbon::now();
+
+        // Buat model "Kas" baru dengan menggunakan data dari tabel "pemandian"
+        $kas = new Kas();
+        $kas->inout_date = $inout_date;
+        $kas->in_out = 'in';
+        $kas->amount = $pemandianData['total_price'];
+        $kas->transaction_type = 'Pemandian';
+        $kas->id_source = $pemandianData['id'];
+        $kas->status = 'valid';
+
+        // Simpan data ke tabel "kas"
+        $kas->save();
 
         return response()->json([
             'alert' => 'success',
