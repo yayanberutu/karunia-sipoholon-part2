@@ -6,6 +6,7 @@ use App\Models\Hotel;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Penginapan;
+use App\Models\Kas;
 use Carbon\Carbon;
 use PDF;
 use Illuminate\Support\Facades\Auth;
@@ -43,6 +44,24 @@ class HotelController extends Controller
     {
         $penginapan->status = 'accepted';
         $penginapan->save();
+
+        // Ambil data dari tabel "penginapan" berdasarkan id
+        $penginapanData = $penginapan->toArray();
+
+        // Ambil waktu server saat ini menggunakan Carbon
+        $inout_date = Carbon::now();
+
+        // Buat model "Kas" baru dengan menggunakan data dari tabel "penginapan"
+        $kas = new Kas();
+        $kas->inout_date = $inout_date;
+        $kas->in_out = 'in';
+        $kas->amount = $penginapanData['total_price'];
+        $kas->transaction_type = 'Penginapan';
+        $kas->id_source = $penginapanData['id'];
+        $kas->status = 'valid';
+
+        // Simpan data ke tabel "kas"
+        $kas->save();
 
         return response()->json([
             'alert' => 'success',

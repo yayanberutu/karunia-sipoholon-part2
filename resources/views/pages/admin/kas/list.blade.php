@@ -14,6 +14,10 @@
                     </tr>
                 </thead>
                 <tbody>
+                    @php
+                        $totalIn = 0;
+                        $totalOut = 0;
+                    @endphp
                     @foreach ($kas as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
@@ -22,8 +26,14 @@
                             <td>
                                 @if ($item->in_out === 'in')
                                     <button class="btn btn-success">MASUK</button>
+                                    @php
+                                        $totalIn += $item->amount;
+                                    @endphp
                                 @elseif ($item->in_out === 'out')
                                     <button class="btn btn-danger">KELUAR</button>
+                                    @php
+                                        $totalOut += $item->amount;
+                                    @endphp
                                 @endif
                             </td>
                             <td>{{ $item->amount }}</td>
@@ -60,5 +70,10 @@
             </table>
         </div>
     </div>
+</div>
+<div class="card-footer">
+    <strong>Total Kas Masuk: Rp {{ number_format($totalIn, 0, ',', '.') }}</strong>
+    <br>
+    <strong>Total Kas Keluar: Rp {{ number_format($totalOut, 0, ',', '.') }}</strong>
 </div>
 
