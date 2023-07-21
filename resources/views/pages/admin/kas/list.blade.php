@@ -1,3 +1,12 @@
+<div class="filter-container">
+    <label for="filter">Filter:</label>
+    <select name="filter" id="filter">
+        <option value="all">Semua</option>
+        <option value="in">Masuk</option>
+        <option value="out">Keluar</option>
+    </select>
+    <button type="button" onclick="applyFilter()">Terapkan</button>
+</div>
 <div class="card-body">
     <div>
         <div class="table-responsive table-card mb-1">
@@ -76,4 +85,19 @@
     <br>
     <strong>Total Kas Keluar: Rp {{ number_format($totalOut, 0, ',', '.') }}</strong>
 </div>
+<script>
+    function applyFilter() {
+        const selectedFilter = document.getElementById('filter').value;
+        const rows = document.querySelectorAll('tbody tr');
 
+        rows.forEach(row => {
+            const inOutCell = row.querySelector('td:nth-child(4) button');
+
+            if (selectedFilter === 'all' || (selectedFilter === 'in' && inOutCell.classList.contains('btn-success')) || (selectedFilter === 'out' && inOutCell.classList.contains('btn-danger'))) {
+                row.style.display = '';
+            } else {
+                row.style.display = 'none';
+            }
+        });
+    }
+</script>

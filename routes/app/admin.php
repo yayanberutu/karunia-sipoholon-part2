@@ -23,6 +23,7 @@ Route::group(['domain' => ''], function () {
             Route::resource('toilet', ToiletController::class);
             Route::resource('hotel', HotelController::class);
             Route::resource('kas', KasController::class);
+            Route::get('kas/filter', [KasController::class, 'filter'])->name('kas.filter');
             Route::resource('pendapatan', PendapatanController::class);
             Route::resource('pengeluaran', PengeluaranController::class);
 
