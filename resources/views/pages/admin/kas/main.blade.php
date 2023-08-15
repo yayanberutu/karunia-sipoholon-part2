@@ -14,10 +14,6 @@
                     <div class="col-sm justify-content-sm-start">
                             <div class="d-flex">
                                 <div class="ms-2">
-                                    <label for="start_date" class="form-label">Date:</label>
-                                    <input type="date" name="start_date" id="start_date" class="form-control">
-                                </div>
-                                <div class="ms-2">
                                     <button class="btn btn-md btn-info" onclick="exportPdf()">Ekspor PDF</button>
                                 </div>
                             </div>
