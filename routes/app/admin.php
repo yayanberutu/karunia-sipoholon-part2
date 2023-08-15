@@ -32,6 +32,7 @@ Route::group(['domain' => ''], function () {
             // Route::get('order/pdf', [OrderController::class, 'pdf'])->name('order.pdf');
             Route::get('order', [OrderController::class, 'index'])->name('order.index');
             Route::get('order/pdf', [OrderController::class, 'pdf'])->name('order.pdf');
+            Route::get('kas/pdf', [KasController::class, 'pdf'])->name('kas.pdf');
             Route::get('order/{order}', [OrderController::class, 'show'])->name('order.show');
             // Route::patch('order/accept/{order}', [OrderController::class, 'accept'])->name('order.accept');
             // Route::patch('order/reject/{order}', [OrderController::class, 'reject'])->name('order.reject');
